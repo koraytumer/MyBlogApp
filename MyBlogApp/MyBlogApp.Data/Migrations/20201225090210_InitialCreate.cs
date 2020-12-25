@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MyBlogApp.WebUI.Migrations
+namespace MyBlogApp.Data.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,6 +39,8 @@ namespace MyBlogApp.WebUI.Migrations
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     isApproved = table.Column<bool>(type: "bit", nullable: false),
+                    isHome = table.Column<bool>(type: "bit", nullable: false),
+                    isSlider = table.Column<bool>(type: "bit", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyBlogApp.Business.Abstract;
+using MyBlogApp.Business.Concrete;
 using MyBlogApp.Data.Abstract;
 using MyBlogApp.Data.Concrete.EfCore;
 using System;
@@ -23,16 +25,24 @@ namespace MyBlogApp.WebUI
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddTransient<ICategoryRepository, EfCategoryRepository>();
             services.AddTransient<IBlogRepository, EfBlogRepository>();
-            services.AddDbContext<BlogContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("MyBlogApp.WebUI")));
-            services.AddMvc();
+            services.AddTransient<ICategoryService, CategoryManager>();
+            services.AddTransient<IBlogService, BlogManager>();
+
+
+
+
+            //services.AddDbContext<BlogContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("MyBlogApp.WebUI")));
+
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                SeedData.Seed();
             }
 
             app.UseStaticFiles();
@@ -47,7 +57,7 @@ namespace MyBlogApp.WebUI
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            SeedData.Seed(app);
+       
         }
     }
 }

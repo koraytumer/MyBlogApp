@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyBlogApp.Business.Abstract;
 using MyBlogApp.Data.Abstract;
 using MyBlogApp.Entity;
 using System;
@@ -10,10 +11,10 @@ namespace MyBlogApp.WebUI.Controllers
 {
     public class CategoryController : Controller
     {
-        private ICategoryRepository repository;
-        public CategoryController(ICategoryRepository _repo)
+        private ICategoryService _categoryService ;
+        public CategoryController(ICategoryService  categoryService)
         {
-            repository = _repo;
+            _categoryService = categoryService;
         }
         public IActionResult Index()
         {
@@ -21,7 +22,7 @@ namespace MyBlogApp.WebUI.Controllers
         }
         public IActionResult List()
         {
-            return View(repository.GetAll());
+            return View(_categoryService.GetAll());
         }
         [HttpGet]
         public IActionResult AddorUpdate(int? id)
@@ -32,7 +33,7 @@ namespace MyBlogApp.WebUI.Controllers
             }
             else
             {
-                return View(repository.GetById((int)id));
+                return View(_categoryService.GetById((int)id));
             }
         }
         [HttpPost]
@@ -40,7 +41,7 @@ namespace MyBlogApp.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                repository.SaveCategory(entity);
+                _categoryService.Update(entity);
                 TempData["message"] = $"{entity.Name} Added.";
                 return RedirectToAction("List");
             }

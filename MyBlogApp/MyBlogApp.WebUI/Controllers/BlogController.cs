@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MyBlogApp.Business.Abstract;
 using MyBlogApp.Data.Abstract;
 using MyBlogApp.Entity;
 using System;
@@ -14,16 +15,16 @@ namespace MyBlogApp.WebUI.Controllers
 {
     public class BlogController : Controller
     {
-        private IBlogRepository _blogRepository;
-        private ICategoryRepository _categoryRepository;
-        public BlogController(IBlogRepository blogRepo, ICategoryRepository categoryRepo)
+        private IBlogService _blogService;
+        private ICategoryService _categoryService;
+        public BlogController(IBlogService blogService, ICategoryService categoryService)
         {
-            _blogRepository = blogRepo;
-            _categoryRepository = categoryRepo;
+            _blogService = blogService;
+            _categoryService = categoryService;
         }
         public IActionResult Index(int? id, string q)
         {
-            var query = _blogRepository.GetAll()
+            var query = _blogService.GetAll()
                         .Where(i => i.isApproved);
 
             if (id != null)
@@ -39,12 +40,12 @@ namespace MyBlogApp.WebUI.Controllers
         }
         public IActionResult List()
         {
-            return View(_blogRepository.GetAll());
+            return View(_blogService.GetAll());
         }
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Categories = new SelectList(_categoryRepository.GetAll(), "CategoryId", "Name");
+            ViewBag.Categories = new SelectList(_categoryService.GetAll(), "CategoryId", "Name");
 
             return View(new Blog());
         }
@@ -53,19 +54,19 @@ namespace MyBlogApp.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _blogRepository.SaveBlog(entity);
+                _blogService.Update(entity);
                 TempData["message"] = $"{entity.Title} added.";
                 return RedirectToAction("List");
             }
-            ViewBag.Categories = new SelectList(_categoryRepository.GetAll(), "CategoryId", "Name");
+            ViewBag.Categories = new SelectList(_categoryService.GetAll(), "CategoryId", "Name");
             return View(entity);
         }
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.Categories = new SelectList(_categoryRepository.GetAll(), "CategoryId", "Name");
+            ViewBag.Categories = new SelectList(_categoryService.GetAll(), "CategoryId", "Name");
 
-            return View(_blogRepository.GetById(id));
+            return View(_blogService.GetById(id));
         }
         [HttpPost]
         public async Task<IActionResult> Edit(Blog entity, IFormFile file)
@@ -81,28 +82,29 @@ namespace MyBlogApp.WebUI.Controllers
                         entity.Image = file.FileName;
                     }
                 }
-                _blogRepository.SaveBlog(entity);
+                _blogService.Update(entity);
                 TempData["message"] = $"{entity.Title} added.";
                 return RedirectToAction("List");
             }
-            ViewBag.Categories = new SelectList(_categoryRepository.GetAll(), "CategoryId", "Name");
+            ViewBag.Categories = new SelectList(_categoryService.GetAll(), "CategoryId", "Name");
             return View(entity);
         }
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(_blogRepository.GetById(id));
+            return View(_blogService.GetById(id));
         }
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int BlogId)
         {
-            _blogRepository.DeleteBlog(BlogId);
+            var entity = _blogService.GetById(BlogId);
+            _blogService.Delete(entity);
             TempData["message"] = $"{BlogId} added.";
             return RedirectToAction("List");
         }
         public IActionResult Details(int id)
         {
-            return View(_blogRepository.GetById(id));
+            return View(_blogService.GetById(id));
         }
     }
 }

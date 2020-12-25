@@ -8,9 +8,13 @@ namespace MyBlogApp.Data.Concrete.EfCore
 {
     public class BlogContext : DbContext
     {
-        public BlogContext(DbContextOptions<BlogContext> options)
-            : base(options)
+        //public BlogContext(DbContextOptions<BlogContext> options)
+        //    : base(options)
+        //{
+        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MyBlogDb;integrated security=true;");
         }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Category> Categories { get; set; }

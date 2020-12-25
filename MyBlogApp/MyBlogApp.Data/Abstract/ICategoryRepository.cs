@@ -6,14 +6,8 @@ using System.Text;
 
 namespace MyBlogApp.Data.Abstract
 {
-    public interface ICategoryRepository
-    {
-        Category GetById(int categoryId);
-        IQueryable<Category> GetAll();
-        void AddCategory(Category entity);
-        void UpdateCategory(Category entity);
-        void DeleteCategory(int categoryId);
-        void SaveCategory(Category entity);
+    public interface ICategoryRepository : IRepository<Category>
+    { 
 
     }
 }

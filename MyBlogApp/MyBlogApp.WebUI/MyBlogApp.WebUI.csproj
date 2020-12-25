@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyBlogApp.Business\MyBlogApp.Business.csproj" />
     <ProjectReference Include="..\MyBlogApp.Data\MyBlogApp.Data.csproj" />
     <ProjectReference Include="..\MyBlogApp.Entity\MyBlogApp.Entity.csproj" /> 
   </ItemGroup>

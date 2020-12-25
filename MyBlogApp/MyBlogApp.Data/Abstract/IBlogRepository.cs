@@ -6,14 +6,8 @@ using System.Text;
 
 namespace MyBlogApp.Data.Abstract
 {
-    public interface IBlogRepository
+    public interface IBlogRepository : IRepository<Blog>
     {
-        Blog GetById(int blogId);
-        IQueryable<Blog> GetAll();
-        void AddBlog(Blog entity);
-        void UpdateBlog(Blog entity);
-        void DeleteBlog(int blogId);
-        void SaveBlog(Blog entity);
-
+      
     }
 }

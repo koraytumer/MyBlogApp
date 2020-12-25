@@ -11,9 +11,9 @@ namespace MyBlogApp.Data.Concrete.EfCore
 {
     public static class SeedData
     {
-        public static void Seed(IApplicationBuilder app)
+        public static void Seed()
         {
-            BlogContext context = app.ApplicationServices.GetRequiredService<BlogContext>();
+            var context = new BlogContext();
             context.Database.Migrate();
 
             if (!context.Categories.Any())
