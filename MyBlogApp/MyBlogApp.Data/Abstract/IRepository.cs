@@ -11,6 +11,6 @@ namespace MyBlogApp.Data.Abstract
         List<T> GetAll();
         void Create(T entity);
         void Update(T entity);
-        void Delete(T entity); 
+        void Delete(T entity);
     }
 }

@@ -12,9 +12,9 @@ namespace MyBlogApp.WebUI.Controllers
     public class HomeController : Controller
     {
         private IBlogService _blogService;
-        public HomeController(IBlogService  blogService)
+        public HomeController(IBlogService blogService)
         {
-            _blogService = blogService; 
+            _blogService = blogService;
         }
         public IActionResult Index()
         {

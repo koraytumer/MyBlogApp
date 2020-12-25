@@ -8,6 +8,6 @@ namespace MyBlogApp.Data.Abstract
 {
     public interface IBlogRepository : IRepository<Blog>
     {
-      
+
     }
 }

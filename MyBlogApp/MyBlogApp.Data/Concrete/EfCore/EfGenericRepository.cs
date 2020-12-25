@@ -14,8 +14,8 @@ namespace MyBlogApp.Data.Concrete.EfCore
         public void Create(T entity)
         {
             using (var context = new TContext())
-            { 
-                context.Set<T>().Add(entity); 
+            {
+                context.Set<T>().Add(entity);
                 context.SaveChanges();
             }
         }
@@ -44,7 +44,7 @@ namespace MyBlogApp.Data.Concrete.EfCore
                 return context.Set<T>().Find(id);
             }
         }
-         
+
         public void Update(T entity)
         {
             using (var context = new TContext())

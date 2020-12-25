@@ -7,8 +7,8 @@ using System.Text;
 
 namespace MyBlogApp.Data.Concrete.EfCore
 {
-    public class EfBlogRepository : EfGenericRepository<Blog,BlogContext>, IBlogRepository
+    public class EfBlogRepository : EfGenericRepository<Blog, BlogContext>, IBlogRepository
     {
-        
+
     }
 }

@@ -30,12 +30,7 @@ namespace MyBlogApp.WebUI
             services.AddTransient<IBlogRepository, EfBlogRepository>();
             services.AddTransient<ICategoryService, CategoryManager>();
             services.AddTransient<IBlogService, BlogManager>();
-
-
-
-
             //services.AddDbContext<BlogContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("MyBlogApp.WebUI")));
-
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -44,7 +39,6 @@ namespace MyBlogApp.WebUI
                 app.UseDeveloperExceptionPage();
                 SeedData.Seed();
             }
-
             app.UseStaticFiles();
             app.UseStatusCodePages();
             app.UseRouting();
@@ -57,7 +51,7 @@ namespace MyBlogApp.WebUI
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-       
+
         }
     }
 }

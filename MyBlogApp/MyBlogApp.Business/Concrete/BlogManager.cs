@@ -26,12 +26,12 @@ namespace MyBlogApp.Business.Concrete
 
         public List<Blog> GetAll()
         {
-          return  _blogRepository.GetAll();
+            return _blogRepository.GetAll();
         }
 
         public Blog GetById(int id)
         {
-           return _blogRepository.GetById(id);
+            return _blogRepository.GetById(id);
         }
 
         public void Update(Blog entity)

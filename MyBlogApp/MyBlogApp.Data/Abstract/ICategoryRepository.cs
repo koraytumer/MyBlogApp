@@ -7,7 +7,7 @@ using System.Text;
 namespace MyBlogApp.Data.Abstract
 {
     public interface ICategoryRepository : IRepository<Category>
-    { 
+    {
 
     }
 }
